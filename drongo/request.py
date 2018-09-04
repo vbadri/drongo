@@ -65,4 +65,8 @@ class Request(object):
     @property
     def json(self):
         """Request body loaded as json."""
-        return json.loads(self.env['BODY'].decode('utf-8'))
+        body = self.env['BODY']
+        if isinstance(body, str):
+            return json.loads(body)
+        else:
+            return json.loads(body.decode('utf-8'))
